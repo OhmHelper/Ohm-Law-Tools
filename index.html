@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Lab Calculators – Electronics & Physics Tools</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Free online electronics & physics calculators with themes, study tools, YouTube course recommendations, and note-card guides." />
-
-  <style>
+  <meta name="description" content="Free online electronics & physics calculators with themes, study tools, YouTube course recommendations, note-card guides, and exam prep tools." />  <style>
     /* ========= THEME VARIABLES ========= */
     :root {
       --bg: #050608;
@@ -418,7 +415,7 @@
     }
 
     .yt-list li {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
     }
 
     .yt-list a {
@@ -428,6 +425,22 @@
 
     .yt-list a:hover {
       text-decoration: underline;
+    }
+
+    .yt-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: block;
+    }
+
+    .yt-pill {
+      display: inline-block;
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      margin-right: 0.25rem;
+      margin-top: 0.1rem;
     }
 
     /* FOOTER */
@@ -491,16 +504,11 @@
         transition: none !important;
       }
     }
-  </style>
-</head>
-
-<body>
+  </style></head><body>
 <header>
   <h1>Lab Calculators</h1>
-  <p>Modern electronics & physics calculators with themes, study tools, YouTube course picks, and note-card guides.</p>
-</header>
-
-<nav id="topNav">
+  <p>Modern electronics & physics calculators with themes, study tools, YouTube course picks, and note-card & exam-prep helpers.</p>
+</header><nav id="topNav">
   <button id="menuToggle">☰</button>
   <div class="nav-links" id="navLinks">
     <button class="nav-link" onclick="scrollToId('electronics-header')">Electronics</button>
@@ -508,367 +516,372 @@
     <button class="nav-link" onclick="scrollToId('notes')">Note Cards</button>
     <button class="nav-link" onclick="scrollToId('ytcourses')">YouTube Courses</button>
     <a class="nav-link" href="study.html">Study Tools</a>
-    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="about.html">About</a><input id="searchBox" type="text" placeholder="Search calculators or topics..." />
+<button id="searchBtn">Search</button>
 
-    <input id="searchBox" type="text" placeholder="Search calculators..." />
-    <button id="searchBtn">Search</button>
+<select id="themeSelect" aria-label="Theme">
+  <option value="system">System</option>
+  <option value="dark">Dark</option>
+  <option value="light">Light</option>
+  <option value="oled">OLED</option>
+  <option value="midnight">Midnight</option>
+  <option value="paper">Paper</option>
+  <option value="hacker">Hacker</option>
+</select>
 
-    <select id="themeSelect" aria-label="Theme">
-      <option value="system">System</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-      <option value="oled">OLED</option>
-      <option value="midnight">Midnight</option>
-      <option value="paper">Paper</option>
-      <option value="hacker">Hacker</option>
-    </select>
   </div>
-</nav>
-
-<main>
+</nav><main>
   <!-- ========= ELECTRONICS ========= -->
   <div class="section-header" id="electronics-header">
     <h2 class="section-title">Electronics Calculators</h2>
     <button class="chip" id="toggleElectronics">Collapse</button>
-  </div>
-
-  <!-- Ohm's Law -->
-  <section class="card electronics-card" id="ohm">
+  </div>  <!-- Ohm's Law -->  <section class="card electronics-card" id="ohm">
     <h2>Ohm's Law &amp; Power</h2>
-    <small>Enter any two values and I'll compute the rest.</small>
+    <small>Enter any two values and I'll compute the rest.</small><label>Voltage V (volts)
+  <input type="number" step="any" id="ohmV" placeholder="e.g. 12" />
+</label>
+<label>Current I (amps)
+  <input type="number" step="any" id="ohmI" placeholder="e.g. 0.5" />
+</label>
+<label>Resistance R (ohms)
+  <input type="number" step="any" id="ohmR" placeholder="e.g. 24" />
+</label>
 
-    <label>Voltage V (volts)
-      <input type="number" step="any" id="ohmV" placeholder="e.g. 12" />
-    </label>
-    <label>Current I (amps)
-      <input type="number" step="any" id="ohmI" placeholder="e.g. 0.5" />
-    </label>
-    <label>Resistance R (ohms)
-      <input type="number" step="any" id="ohmR" placeholder="e.g. 24" />
-    </label>
+<button onclick="calcOhm()">Calculate</button>
+<div class="result" id="ohmResult"></div>
 
-    <button onclick="calcOhm()">Calculate</button>
-    <div class="result" id="ohmResult"></div>
-  </section>
-
-  <!-- Series / Parallel resistors -->
-  <section class="card electronics-card">
+  </section>  <!-- Series / Parallel resistors -->  <section class="card electronics-card">
     <h2>Equivalent Resistance</h2>
-    <small>Series or parallel combination of up to 6 resistors.</small>
+    <small>Series or parallel combination of up to 6 resistors.</small><label>Mode
+  <select id="reqMode">
+    <option value="series">Series</option>
+    <option value="parallel">Parallel</option>
+  </select>
+</label>
 
-    <label>Mode
-      <select id="reqMode">
-        <option value="series">Series</option>
-        <option value="parallel">Parallel</option>
-      </select>
-    </label>
+<label>Resistors (ohms, comma-separated)
+  <input type="text" id="reqList" placeholder="e.g. 10, 22, 47" />
+</label>
+<div class="hint">Leave empty values out; only numbers and commas.</div>
 
-    <label>Resistors (ohms, comma-separated)
-      <input type="text" id="reqList" placeholder="e.g. 10, 22, 47" />
-    </label>
-    <div class="hint">Leave empty values out; only numbers and commas.</div>
+<button onclick="calcReq()">Calculate</button>
+<div class="result" id="reqResult"></div>
 
-    <button onclick="calcReq()">Calculate</button>
-    <div class="result" id="reqResult"></div>
-  </section>
-
-  <!-- Voltage divider -->
-  <section class="card electronics-card">
+  </section>  <!-- Voltage divider -->  <section class="card electronics-card">
     <h2>Voltage Divider</h2>
-    <small>Two-resistor divider: Vout = Vin × R2 / (R1 + R2).</small>
+    <small>Two-resistor divider: Vout = Vin × R2 / (R1 + R2).</small><label>Input Voltage Vin (V)
+  <input type="number" step="any" id="vdVin" placeholder="e.g. 12" />
+</label>
+<label>R1 (ohms)
+  <input type="number" step="any" id="vdR1" placeholder="e.g. 4700" />
+</label>
+<label>R2 (ohms)
+  <input type="number" step="any" id="vdR2" placeholder="e.g. 2200" />
+</label>
 
-    <label>Input Voltage Vin (V)
-      <input type="number" step="any" id="vdVin" placeholder="e.g. 12" />
-    </label>
-    <label>R1 (ohms)
-      <input type="number" step="any" id="vdR1" placeholder="e.g. 4700" />
-    </label>
-    <label>R2 (ohms)
-      <input type="number" step="any" id="vdR2" placeholder="e.g. 2200" />
-    </label>
+<button onclick="calcVoltageDivider()">Calculate</button>
+<div class="result" id="vdResult"></div>
 
-    <button onclick="calcVoltageDivider()">Calculate</button>
-    <div class="result" id="vdResult"></div>
-  </section>
-
-  <!-- LED resistor -->
-  <section class="card electronics-card">
+  </section>  <!-- LED resistor -->  <section class="card electronics-card">
     <h2>LED Series Resistor</h2>
-    <small>Compute resistor to set LED current.</small>
+    <small>Compute resistor to set LED current.</small><label>Supply Voltage Vs (V)
+  <input type="number" step="any" id="ledVs" placeholder="e.g. 5" />
+</label>
+<label>LED Forward Voltage Vf (V)
+  <input type="number" step="any" id="ledVf" placeholder="e.g. 2" />
+</label>
+<label>LED Current If (mA)
+  <input type="number" step="any" id="ledIf" placeholder="e.g. 20" />
+</label>
 
-    <label>Supply Voltage Vs (V)
-      <input type="number" step="any" id="ledVs" placeholder="e.g. 5" />
-    </label>
-    <label>LED Forward Voltage Vf (V)
-      <input type="number" step="any" id="ledVf" placeholder="e.g. 2" />
-    </label>
-    <label>LED Current If (mA)
-      <input type="number" step="any" id="ledIf" placeholder="e.g. 20" />
-    </label>
+<button onclick="calcLed()">Calculate</button>
+<div class="result" id="ledResult"></div>
 
-    <button onclick="calcLed()">Calculate</button>
-    <div class="result" id="ledResult"></div>
-  </section>
-
-  <!-- RC time constant -->
-  <section class="card electronics-card" id="rc">
+  </section>  <!-- RC time constant -->  <section class="card electronics-card" id="rc">
     <h2>RC Time Constant &amp; Cutoff</h2>
-    <small>First-order RC: τ = R·C, fc ≈ 1 / (2πRC).</small>
+    <small>First-order RC: τ = R·C, fc ≈ 1 / (2πRC).</small><label>Resistance R (ohms)
+  <input type="number" step="any" id="rcR" placeholder="e.g. 10000" />
+</label>
+<label>Capacitance C (farads)
+  <input type="number" step="any" id="rcC" placeholder="e.g. 0.000001 (1 µF)" />
+</label>
 
-    <label>Resistance R (ohms)
-      <input type="number" step="any" id="rcR" placeholder="e.g. 10000" />
-    </label>
-    <label>Capacitance C (farads)
-      <input type="number" step="any" id="rcC" placeholder="e.g. 0.000001 (1 µF)" />
-    </label>
+<button onclick="calcRC()">Calculate</button>
+<div class="result" id="rcResult"></div>
 
-    <button onclick="calcRC()">Calculate</button>
-    <div class="result" id="rcResult"></div>
-  </section>
-
-  <!-- RL time constant -->
-  <section class="card electronics-card">
+  </section>  <!-- RL time constant -->  <section class="card electronics-card">
     <h2>RL Time Constant &amp; Cutoff</h2>
-    <small>First-order RL: τ = L / R.</small>
+    <small>First-order RL: τ = L / R.</small><label>Resistance R (ohms)
+  <input type="number" step="any" id="rlR" placeholder="e.g. 10" />
+</label>
+<label>Inductance L (henries)
+  <input type="number" step="any" id="rlL" placeholder="e.g. 0.01" />
+</label>
 
-    <label>Resistance R (ohms)
-      <input type="number" step="any" id="rlR" placeholder="e.g. 10" />
-    </label>
-    <label>Inductance L (henries)
-      <input type="number" step="any" id="rlL" placeholder="e.g. 0.01" />
-    </label>
+<button onclick="calcRL()">Calculate</button>
+<div class="result" id="rlResult"></div>
 
-    <button onclick="calcRL()">Calculate</button>
-    <div class="result" id="rlResult"></div>
-  </section>
-
-  <!-- LC resonance -->
-  <section class="card electronics-card" id="resonance">
+  </section>  <!-- LC resonance -->  <section class="card electronics-card" id="resonance">
     <h2>LC Resonant Frequency</h2>
-    <small>f₀ = 1 / (2π√(LC)).</small>
+    <small>f₀ = 1 / (2π√(LC)).</small><label>Inductance L (henries)
+  <input type="number" step="any" id="lcL" placeholder="e.g. 0.001" />
+</label>
+<label>Capacitance C (farads)
+  <input type="number" step="any" id="lcC" placeholder="e.g. 0.000000001 (1 nF)" />
+</label>
 
-    <label>Inductance L (henries)
-      <input type="number" step="any" id="lcL" placeholder="e.g. 0.001" />
-    </label>
-    <label>Capacitance C (farads)
-      <input type="number" step="any" id="lcC" placeholder="e.g. 0.000000001 (1 nF)" />
-    </label>
+<button onclick="calcLC()">Calculate</button>
+<div class="result" id="lcResult"></div>
 
-    <button onclick="calcLC()">Calculate</button>
-    <div class="result" id="lcResult"></div>
-  </section>
-
-  <!-- Energy storage -->
-  <section class="card electronics-card">
+  </section>  <!-- Energy storage -->  <section class="card electronics-card">
     <h2>Energy in C / L</h2>
-    <small>Capacitor: ½CV². Inductor: ½LI².</small>
+    <small>Capacitor: ½CV². Inductor: ½LI².</small><label>Capacitance C (F)
+  <input type="number" step="any" id="eC" placeholder="e.g. 0.00047" />
+</label>
+<label>Capacitor Voltage V (V)
+  <input type="number" step="any" id="eV" placeholder="e.g. 16" />
+</label>
 
-    <label>Capacitance C (F)
-      <input type="number" step="any" id="eC" placeholder="e.g. 0.00047" />
-    </label>
-    <label>Capacitor Voltage V (V)
-      <input type="number" step="any" id="eV" placeholder="e.g. 16" />
-    </label>
+<label>Inductance L (H)
+  <input type="number" step="any" id="eL" placeholder="e.g. 0.01" />
+</label>
+<label>Inductor Current I (A)
+  <input type="number" step="any" id="eI" placeholder="e.g. 2" />
+</label>
 
-    <label>Inductance L (H)
-      <input type="number" step="any" id="eL" placeholder="e.g. 0.01" />
-    </label>
-    <label>Inductor Current I (A)
-      <input type="number" step="any" id="eI" placeholder="e.g. 2" />
-    </label>
+<button onclick="calcEnergy()">Calculate</button>
+<div class="result" id="eResult"></div>
 
-    <button onclick="calcEnergy()">Calculate</button>
-    <div class="result" id="eResult"></div>
-  </section>
-
-  <!-- dB gain -->
-  <section class="card electronics-card">
+  </section>  <!-- dB gain -->  <section class="card electronics-card">
     <h2>dB Gain</h2>
-    <small>Voltage or power gain in decibels.</small>
+    <small>Voltage or power gain in decibels.</small><label>Mode
+  <select id="dbMode">
+    <option value="voltage">Voltage gain (20·log₁₀(Vout/Vin))</option>
+    <option value="power">Power gain (10·log₁₀(Pout/Pin))</option>
+  </select>
+</label>
 
-    <label>Mode
-      <select id="dbMode">
-        <option value="voltage">Voltage gain (20·log₁₀(Vout/Vin))</option>
-        <option value="power">Power gain (10·log₁₀(Pout/Pin))</option>
-      </select>
-    </label>
+<label>Input (Vin or Pin)
+  <input type="number" step="any" id="dbIn" placeholder="e.g. 1" />
+</label>
+<label>Output (Vout or Pout)
+  <input type="number" step="any" id="dbOut" placeholder="e.g. 10" />
+</label>
 
-    <label>Input (Vin or Pin)
-      <input type="number" step="any" id="dbIn" placeholder="e.g. 1" />
-    </label>
-    <label>Output (Vout or Pout)
-      <input type="number" step="any" id="dbOut" placeholder="e.g. 10" />
-    </label>
+<button onclick="calcDB()">Calculate</button>
+<div class="result" id="dbResult"></div>
 
-    <button onclick="calcDB()">Calculate</button>
-    <div class="result" id="dbResult"></div>
-  </section>
-
-  <!-- ========= PHYSICS ========= -->
-  <div class="section-header" id="physics-header">
+  </section>  <!-- ========= PHYSICS ========= -->  <div class="section-header" id="physics-header">
     <h2 class="section-title">Physics Calculators</h2>
     <button class="chip" id="togglePhysics">Collapse</button>
-  </div>
-
-  <!-- Kinematics -->
-  <section class="card physics-card" id="kinematics">
+  </div>  <!-- Kinematics -->  <section class="card physics-card" id="kinematics">
     <h2>1D Kinematics (constant a)</h2>
-    <small>Uses v² = v₀² + 2aΔx and v = v₀ + a·t.</small>
+    <small>Uses v² = v₀² + 2aΔx and v = v₀ + a·t.</small><label>Initial velocity v₀ (m/s)
+  <input type="number" step="any" id="kmV0" placeholder="e.g. 0" />
+</label>
+<label>Acceleration a (m/s²)
+  <input type="number" step="any" id="kmA" placeholder="e.g. 9.8" />
+</label>
+<label>Time t (s)
+  <input type="number" step="any" id="kmT" placeholder="optional" />
+</label>
+<label>Displacement Δx (m)
+  <input type="number" step="any" id="kmDx" placeholder="optional" />
+</label>
 
-    <label>Initial velocity v₀ (m/s)
-      <input type="number" step="any" id="kmV0" placeholder="e.g. 0" />
-    </label>
-    <label>Acceleration a (m/s²)
-      <input type="number" step="any" id="kmA" placeholder="e.g. 9.8" />
-    </label>
-    <label>Time t (s)
-      <input type="number" step="any" id="kmT" placeholder="optional" />
-    </label>
-    <label>Displacement Δx (m)
-      <input type="number" step="any" id="kmDx" placeholder="optional" />
-    </label>
+<button onclick="calcKinematics()">Solve</button>
+<div class="result" id="kmResult"></div>
 
-    <button onclick="calcKinematics()">Solve</button>
-    <div class="result" id="kmResult"></div>
-  </section>
-
-  <!-- Projectile -->
-  <section class="card physics-card" id="projectile">
+  </section>  <!-- Projectile -->  <section class="card physics-card" id="projectile">
     <h2>Projectile Motion</h2>
-    <small>Flat ground, ignore air resistance.</small>
+    <small>Flat ground, ignore air resistance.</small><label>Initial speed v₀ (m/s)
+  <input type="number" step="any" id="pmV0" placeholder="e.g. 20" />
+</label>
+<label>Launch angle θ (degrees)
+  <input type="number" step="any" id="pmAngle" placeholder="e.g. 45" />
+</label>
+<label>Gravity g (m/s²)
+  <input type="number" step="any" id="pmG" placeholder="9.8" />
+</label>
 
-    <label>Initial speed v₀ (m/s)
-      <input type="number" step="any" id="pmV0" placeholder="e.g. 20" />
-    </label>
-    <label>Launch angle θ (degrees)
-      <input type="number" step="any" id="pmAngle" placeholder="e.g. 45" />
-    </label>
-    <label>Gravity g (m/s²)
-      <input type="number" step="any" id="pmG" placeholder="9.8" />
-    </label>
+<button onclick="calcProjectile()">Calculate</button>
+<div class="result" id="pmResult"></div>
 
-    <button onclick="calcProjectile()">Calculate</button>
-    <div class="result" id="pmResult"></div>
-  </section>
-
-  <!-- Newton's law -->
-  <section class="card physics-card">
+  </section>  <!-- Newton's law -->  <section class="card physics-card">
     <h2>Force &amp; Weight</h2>
-    <small>F = m·a and weight W = m·g.</small>
+    <small>F = m·a and weight W = m·g.</small><label>Mass m (kg)
+  <input type="number" step="any" id="nwM" placeholder="e.g. 5" />
+</label>
+<label>Acceleration a (m/s²)
+  <input type="number" step="any" id="nwA" placeholder="e.g. 2" />
+</label>
+<label>Gravity g (m/s²) for weight
+  <input type="number" step="any" id="nwG" placeholder="9.8" />
+</label>
 
-    <label>Mass m (kg)
-      <input type="number" step="any" id="nwM" placeholder="e.g. 5" />
-    </label>
-    <label>Acceleration a (m/s²)
-      <input type="number" step="any" id="nwA" placeholder="e.g. 2" />
-    </label>
-    <label>Gravity g (m/s²) for weight
-      <input type="number" step="any" id="nwG" placeholder="9.8" />
-    </label>
+<button onclick="calcNewton()">Calculate</button>
+<div class="result" id="nwResult"></div>
 
-    <button onclick="calcNewton()">Calculate</button>
-    <div class="result" id="nwResult"></div>
-  </section>
-
-  <!-- Momentum / KE -->
-  <section class="card physics-card">
+  </section>  <!-- Momentum / KE -->  <section class="card physics-card">
     <h2>Momentum &amp; Kinetic Energy</h2>
-    <small>p = m·v, KE = ½m·v².</small>
+    <small>p = m·v, KE = ½m·v².</small><label>Mass m (kg)
+  <input type="number" step="any" id="mkM" placeholder="e.g. 1.5" />
+</label>
+<label>Speed v (m/s)
+  <input type="number" step="any" id="mkV" placeholder="e.g. 10" />
+</label>
 
-    <label>Mass m (kg)
-      <input type="number" step="any" id="mkM" placeholder="e.g. 1.5" />
-    </label>
-    <label>Speed v (m/s)
-      <input type="number" step="any" id="mkV" placeholder="e.g. 10" />
-    </label>
+<button onclick="calcMomentumKE()">Calculate</button>
+<div class="result" id="mkResult"></div>
 
-    <button onclick="calcMomentumKE()">Calculate</button>
-    <div class="result" id="mkResult"></div>
-  </section>
-
-  <!-- ========= STUDY NOTE CARD SECTION ========= -->
-  <section class="notes-section" id="notes">
+  </section>  <!-- ========= STUDY NOTE CARD SECTION ========= -->  <section class="notes-section" id="notes">
     <h2>What to Put on Your Physics Note Card</h2>
-    <p>Perfect for midterms & finals. These are high-yield formulas and ideas.</p>
+    <p>Perfect for midterms & finals. These are high-yield formulas and ideas.</p><h3>📘 Mechanics</h3>
+<ul class="notes-list">
+  <li>Kinematics: v = v₀ + at,  Δx = v₀t + ½at²,  v² = v₀² + 2aΔx</li>
+  <li>Force: F = ma</li>
+  <li>Weight: W = mg</li>
+  <li>Momentum: p = mv</li>
+  <li>Kinetic Energy: KE = ½mv²</li>
+  <li>Potential Energy: PE = mgh</li>
+  <li>Work: W = F·d·cosθ</li>
+  <li>Power: P = W/t = Fv</li>
+</ul>
 
-    <h3>📘 Mechanics</h3>
-    <ul class="notes-list">
-      <li>Kinematics: v = v₀ + at,  Δx = v₀t + ½at²,  v² = v₀² + 2aΔx</li>
-      <li>Force: F = ma</li>
-      <li>Weight: W = mg</li>
-      <li>Momentum: p = mv</li>
-      <li>Kinetic Energy: KE = ½mv²</li>
-      <li>Potential Energy: PE = mgh</li>
-      <li>Work: W = F·d·cosθ</li>
-      <li>Power: P = W/t = Fv</li>
-    </ul>
+<h3>🔌 Circuits</h3>
+<ul class="notes-list">
+  <li>Ohm’s Law: V = IR</li>
+  <li>Power: P = VI = I²R = V²/R</li>
+  <li>RC: τ = RC, cutoff fc ≈ 1/(2πRC)</li>
+  <li>RL: τ = L/R, cutoff fc ≈ R/(2πL)</li>
+  <li>Resonance: f₀ = 1/(2π√(LC))</li>
+</ul>
 
-    <h3>🔌 Circuits</h3>
-    <ul class="notes-list">
-      <li>Ohm’s Law: V = IR</li>
-      <li>Power: P = VI = I²R = V²/R</li>
-      <li>RC: τ = RC, cutoff fc ≈ 1/(2πRC)</li>
-      <li>RL: τ = L/R, cutoff fc ≈ R/(2πL)</li>
-      <li>Resonance: f₀ = 1/(2π√(LC))</li>
-    </ul>
+<h3>📐 Vectors</h3>
+<ul class="notes-list">
+  <li>Dot product: a·b = |a||b|cosθ</li>
+  <li>Cross product magnitude: |a×b| = |a||b|sinθ</li>
+  <li>Unit vector: û = u / |u|</li>
+</ul>
 
-    <h3>📐 Vectors</h3>
-    <ul class="notes-list">
-      <li>Dot product: a·b = |a||b|cosθ</li>
-      <li>Cross product magnitude: |a×b| = |a||b|sinθ</li>
-      <li>Unit vector: û = u / |u|</li>
-    </ul>
+<h3>📡 Waves / EM</h3>
+<ul class="notes-list">
+  <li>Wave speed: v = fλ</li>
+  <li>Intensity: I = P/A</li>
+  <li>Coulomb’s Law: F = kq₁q₂/r²</li>
+  <li>Field from point charge: E = kq/r²</li>
+</ul>
 
-    <h3>📡 Waves / EM</h3>
-    <ul class="notes-list">
-      <li>Wave speed: v = fλ</li>
-      <li>Intensity: I = P/A</li>
-      <li>Coulomb’s Law: F = kq₁q₂/r²</li>
-      <li>Field from point charge: E = kq/r²</li>
-    </ul>
+<div class="notes-download">
+  (Optional) Add a PDF version to <code>assets/physics-notes.pdf</code> and this link will download it:
+  <br />
+  <a href="assets/physics-notes.pdf" download>Download Physics Note Card (PDF)</a>
+</div>
 
-    <div class="notes-download">
-      (Optional) Add a PDF version to <code>assets/physics-notes.pdf</code> and this link will download it:
-      <br />
-      <a href="assets/physics-notes.pdf" download>Download Physics Note Card (PDF)</a>
-    </div>
-  </section>
-
-  <!-- ========= YOUTUBE COURSE RECOMMENDER ========= -->
-  <div class="section-header" id="ytcourses">
-    <h2 class="section-title">Recommended YouTube Courses</h2>
-  </div>
-
-  <section class="card">
+  </section>  <!-- ========= YOUTUBE COURSE RECOMMENDER ========= -->  <div class="section-header" id="ytcourses">
+    <h2 class="section-title">YouTube Course Tools</h2>
+  </div>  <!-- Pick Classes -->  <section class="card">
     <h2>Pick Your Classes</h2>
-    <small>Click the subjects you care about. Everything runs locally in your browser.</small>
+    <small>Click the subjects you care about. Everything runs locally in your browser.</small><div class="yt-tags" id="ytTags">
+  <button class="yt-tag" data-key="physics1">Physics I (Mechanics)</button>
+  <button class="yt-tag" data-key="physics2">Physics II (E&M)</button>
+  <button class="yt-tag" data-key="circuits">Circuits / Electronics I</button>
+  <button class="yt-tag" data-key="calc">Calculus I–III</button>
+  <button class="yt-tag" data-key="diffEq">Differential Equations</button>
+  <button class="yt-tag" data-key="programming">Programming (Java / Python)</button>
+</div>
 
-    <div class="yt-tags" id="ytTags">
-      <button class="yt-tag" data-key="physics1">Physics I (Mechanics)</button>
-      <button class="yt-tag" data-key="physics2">Physics II (E&M)</button>
-      <button class="yt-tag" data-key="circuits">Circuits / Electronics I</button>
-      <button class="yt-tag" data-key="calc">Calculus I–III</button>
-      <button class="yt-tag" data-key="diffEq">Differential Equations</button>
-      <button class="yt-tag" data-key="programming">Programming (Java / Python)</button>
-    </div>
+<button onclick="showYTRecommendations()">Show Recommendations</button>
+<div class="result" id="ytResult">
+  <p style="margin:0;font-size:0.85rem;color:var(--muted);">
+    No data is sent anywhere. This just filters a curated list of channels and remembers your classes on this device.
+  </p>
+</div>
 
-    <button onclick="showYTRecommendations()">Show Recommendations</button>
-    <div class="result" id="ytResult">
-      <p style="margin:0;font-size:0.85rem;color:var(--muted);">No data is sent anywhere. This just filters a curated list of channels.</p>
-    </div>
-  </section>
+  </section>  <!-- Exam Prep Mode -->  <section class="card">
+    <h2>Exam Prep Mode</h2>
+    <small>Quick plan based on your class, topic, and time available.</small><label>Class
+  <select id="examClass">
+    <option value="physics1">Physics I (Mechanics)</option>
+    <option value="physics2">Physics II (E&M)</option>
+    <option value="circuits">Circuits / Electronics I</option>
+    <option value="calc">Calculus I–III</option>
+    <option value="diffEq">Differential Equations</option>
+    <option value="programming">Programming (Java / Python)</option>
+  </select>
+</label>
 
-</main>
+<label>Topic (e.g. "Kinematics", "RC circuits", "Series test")
+  <input type="text" id="examTopic" placeholder="Type your topic here" />
+</label>
 
-<footer>
+<label>Time Available
+  <select id="examTime">
+    <option value="30">30 minutes</option>
+    <option value="60">1 hour</option>
+    <option value="120">2 hours</option>
+  </select>
+</label>
+
+<button onclick="generateExamPlan()">Generate Exam Plan</button>
+<div class="result" id="examResult"></div>
+
+  </section>  <!-- Course Wizard -->  <section class="card">
+    <h2>Course Wizard</h2>
+    <small>Helps pick a channel based on your learning style.</small><label>Subject
+  <select id="wizSubject">
+    <option value="physics1">Physics I (Mechanics)</option>
+    <option value="physics2">Physics II (E&M)</option>
+    <option value="circuits">Circuits / Electronics I</option>
+    <option value="calc">Calculus I–III</option>
+    <option value="diffEq">Differential Equations</option>
+    <option value="programming">Programming (Java / Python)</option>
+  </select>
+</label>
+
+<label>Preferred Style
+  <select id="wizStyle">
+    <option value="visual">Visual / intuition</option>
+    <option value="derivation">Board work & derivations</option>
+    <option value="practice">Tons of practice problems</option>
+    <option value="fast">Fast crash-course</option>
+  </select>
+</label>
+
+<label>Video Length
+  <select id="wizLength">
+    <option value="short">Short episodes</option>
+    <option value="long">Long lectures</option>
+    <option value="mixed">Mixed</option>
+  </select>
+</label>
+
+<button onclick="runCourseWizard()">Suggest a Course</button>
+<div class="result" id="wizResult"></div>
+
+  </section>  <!-- Course Bundles -->  <section class="card">
+    <h2>Course Bundles</h2>
+    <small>One-click packs for common degree paths.</small><div class="yt-tags" id="bundleTags">
+  <button class="yt-tag" data-bundle="physicsTrack">Physics / Engineering Track</button>
+  <button class="yt-tag" data-bundle="eeTrack">Electronics / EE Track</button>
+  <button class="yt-tag" data-bundle="csTrack">CS / Programming Track</button>
+  <button class="yt-tag" data-bundle="mathTrack">Math-Heavy Track</button>
+</div>
+
+<button onclick="applyBundleAndShow()">Apply Bundle & Show</button>
+<div class="hint">Bundles just toggle the same class buttons above and are saved in your browser.</div>
+
+  </section>  <!-- Full Library -->  <section class="card">
+    <h2>Full Course Library (Quick View)</h2>
+    <small>Browse the main channels once without filtering.</small><div class="result" id="libraryResult"></div>
+
+  </section></main><footer>
   <p>
     © Lab Calculators — Educational use only.
     · <a href="privacy.html">Privacy Policy</a>
     · <a href="https://github.com/OhmHelper/Ohm-Law-Tools" target="_blank" rel="noopener">GitHub Repo</a>
   </p>
-</footer>
-
-<button id="backToTop">↑ Top</button>
+</footer><button id="backToTop">↑ Top</button>
 
 <script>
   /* ===== Helper functions ===== */
@@ -921,7 +934,7 @@
     saveTheme(value);
   });
 
-  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", e => {
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
     const current = localStorage.getItem("labCalcTheme") || "system";
     if (current === "system") {
       applyTheme("system");
@@ -1003,114 +1016,410 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  /* ===== YOUTUBE RECOMMENDER ===== */
+  /* ===== YOUTUBE DATA (with meta) ===== */
   const ytData = {
     physics1: [
       {
-        label: "Michel van Biezen – Mechanics playlists",
-        url: "https://www.youtube.com/@MichelvanBiezen/playlists"
+        key: "mvb_mech",
+        label: "Michel van Biezen – Mechanics Playlists",
+        url: "https://www.youtube.com/@MichelvanBiezen/playlists",
+        difficulty: "Medium",
+        style: "Board work, derivations",
+        length: "Long lectures",
+        exam: "Great for full course review",
+        rating: 5
       },
       {
-        label: "Flipping Physics – AP/Intro mechanics",
-        url: "https://www.youtube.com/@FlippingPhysics"
+        key: "flip_phys",
+        label: "Flipping Physics – Intro / AP Mechanics",
+        url: "https://www.youtube.com/@FlippingPhysics",
+        difficulty: "Intro",
+        style: "Conceptual + worked examples",
+        length: "Short to medium",
+        exam: "Perfect for test cramming",
+        rating: 4
       }
     ],
     physics2: [
       {
-        label: "Michel van Biezen – E&M playlists",
-        url: "https://www.youtube.com/@MichelvanBiezen/playlists"
+        key: "mvb_em",
+        label: "Michel van Biezen – E&M Playlists",
+        url: "https://www.youtube.com/@MichelvanBiezen/playlists",
+        difficulty: "Medium",
+        style: "Board work, step-by-step",
+        length: "Long lectures",
+        exam: "Strong for problem practice",
+        rating: 5
       },
       {
-        label: "Physics with Professor Dave – E&M",
-        url: "https://www.youtube.com/@ProfessorDaveExplains"
+        key: "pde_em",
+        label: "Professor Dave – Electricity & Magnetism",
+        url: "https://www.youtube.com/@ProfessorDaveExplains",
+        difficulty: "Intro–Medium",
+        style: "Short conceptual videos",
+        length: "Short",
+        exam: "Good for cleaning up weak spots",
+        rating: 4
       }
     ],
     circuits: [
       {
-        label: "Afrotechmods – basic circuits",
-        url: "https://www.youtube.com/@Afrotechmods"
+        key: "afro",
+        label: "Afrotechmods – Basic Circuits",
+        url: "https://www.youtube.com/@Afrotechmods",
+        difficulty: "Intro",
+        style: "Visual + intuition",
+        length: "Short",
+        exam: "Great for first circuits class",
+        rating: 5
       },
       {
-        label: "All About Circuits – fundamentals",
-        url: "https://www.youtube.com/@AllAboutCircuits"
+        key: "aac",
+        label: "All About Circuits – Fundamentals",
+        url: "https://www.youtube.com/@AllAboutCircuits",
+        difficulty: "Medium",
+        style: "Mixed visual and board work",
+        length: "Short to medium",
+        exam: "Good for refreshing specific topics",
+        rating: 4
       },
       {
-        label: "EEVblog – practical electronics",
-        url: "https://www.youtube.com/@EEVblog"
+        key: "eevblog",
+        label: "EEVblog – Practical Electronics",
+        url: "https://www.youtube.com/@EEVblog",
+        difficulty: "Medium–Advanced",
+        style: "Hands-on, lab style",
+        length: "Medium to long",
+        exam: "Best for intuition, not formal proofs",
+        rating: 4
       }
     ],
     calc: [
       {
-        label: "Professor Leonard – full Calculus I–III courses",
-        url: "https://www.youtube.com/@ProfessorLeonard"
+        key: "leonard_calc",
+        label: "Professor Leonard – Calculus I–III",
+        url: "https://www.youtube.com/@ProfessorLeonard",
+        difficulty: "Medium",
+        style: "Full chalkboard lectures",
+        length: "Long lectures",
+        exam: "Full course replacement",
+        rating: 5
       },
       {
-        label: "3Blue1Brown – visual intuition",
-        url: "https://www.youtube.com/@3blue1brown"
+        key: "3b1b",
+        label: "3Blue1Brown – Calculus & Linear Algebra",
+        url: "https://www.youtube.com/@3blue1brown",
+        difficulty: "Conceptual",
+        style: "High visual intuition",
+        length: "Short to medium",
+        exam: "Great for big-picture understanding",
+        rating: 5
       },
       {
-        label: "patrickJMT – worked examples",
-        url: "https://www.youtube.com/@patrickjmt"
+        key: "patrick",
+        label: "patrickJMT – Worked Calculus Examples",
+        url: "https://www.youtube.com/@patrickjmt",
+        difficulty: "Intro–Medium",
+        style: "Problem drilling",
+        length: "Short",
+        exam: "Perfect for last-minute example practice",
+        rating: 4
       }
     ],
     diffEq: [
       {
+        key: "leo_diff",
         label: "Professor Leonard – Differential Equations",
-        url: "https://www.youtube.com/@ProfessorLeonard"
+        url: "https://www.youtube.com/@ProfessorLeonard",
+        difficulty: "Medium",
+        style: "Full lecture series",
+        length: "Long lectures",
+        exam: "Good for full-course support",
+        rating: 5
       },
       {
-        label: "blackpenredpen – Diff Eq examples",
-        url: "https://www.youtube.com/@blackpenredpen"
+        key: "bprp_diff",
+        label: "blackpenredpen – Diff Eq Examples",
+        url: "https://www.youtube.com/@blackpenredpen",
+        difficulty: "Medium–Advanced",
+        style: "Fast example solving",
+        length: "Short",
+        exam: "Great for targeted problem types",
+        rating: 4
       }
     ],
     programming: [
       {
-        label: "Bro Code – Java/Python/CS basics",
-        url: "https://www.youtube.com/@BroCodez"
+        key: "brocode",
+        label: "Bro Code – Java/Python/CS Basics",
+        url: "https://www.youtube.com/@BroCodez",
+        difficulty: "Intro",
+        style: "Hands-on coding",
+        length: "Short to medium",
+        exam: "Great for beginners and project ideas",
+        rating: 5
       },
       {
-        label: "freeCodeCamp.org – full-length courses",
-        url: "https://www.youtube.com/@freecodecamp"
+        key: "fcc",
+        label: "freeCodeCamp – Full Courses",
+        url: "https://www.youtube.com/@freecodecamp",
+        difficulty: "Intro–Medium",
+        style: "Full-length tutorials",
+        length: "Long",
+        exam: "Good for learning from scratch",
+        rating: 5
       }
     ]
   };
 
   const ytTags = document.getElementById("ytTags");
   const ytResult = document.getElementById("ytResult");
+  const bundleTags = document.getElementById("bundleTags");
+  const libraryResult = document.getElementById("libraryResult");
+
+  function getActiveSubjects() {
+    return Array.from(document.querySelectorAll(".yt-tag.active"))
+      .filter(btn => btn.dataset.key)
+      .map(btn => btn.dataset.key);
+  }
+
+  function saveSubjects() {
+    const activeKeys = getActiveSubjects();
+    localStorage.setItem("labCalcSubjects", JSON.stringify(activeKeys));
+  }
+
+  function restoreSubjects() {
+    const raw = localStorage.getItem("labCalcSubjects");
+    if (!raw) return;
+    try {
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return;
+      arr.forEach(key => {
+        const btn = document.querySelector(`.yt-tag[data-key="${key}"]`);
+        if (btn) btn.classList.add("active");
+      });
+      if (arr.length > 0) {
+        showYTRecommendations(true);
+      }
+    } catch (_) {}
+  }
 
   ytTags.addEventListener("click", e => {
     const tag = e.target.closest(".yt-tag");
-    if (!tag) return;
+    if (!tag || !tag.dataset.key) return;
     tag.classList.toggle("active");
+    saveSubjects();
   });
 
-  function showYTRecommendations() {
-    const active = Array.from(document.querySelectorAll(".yt-tag.active"));
+  function renderCourseList(courses, opts = {}) {
+    if (courses.length === 0) return "<p style='margin:0;font-size:0.9rem;'>No courses matched.</p>";
+
+    const lastUsed = localStorage.getItem("labCalcLastSubject");
+    let header = "";
+    if (!opts.suppressHeader && lastUsed) {
+      const labelMap = {
+        physics1: "Physics I / Mechanics",
+        physics2: "Physics II / E&M",
+        circuits: "Circuits / Electronics",
+        calc: "Calculus",
+        diffEq: "Differential Equations",
+        programming: "Programming"
+      };
+      header = `<p style="margin-top:0;margin-bottom:0.4rem;font-size:0.8rem;color:var(--muted);">Based on your recent calculator usage: <strong>${labelMap[lastUsed] || ""}</strong></p>`;
+    }
+
+    let html = header + "<ul class='yt-list'>";
+    courses.forEach(entry => {
+      const stars = "★".repeat(entry.rating || 4) + "☆".repeat(Math.max(0, 5 - (entry.rating || 4)));
+      html += `<li>
+        <a href="${entry.url}" target="_blank" rel="noopener">${entry.label}</a>
+        <span class="yt-meta">${stars} · ${entry.difficulty} · ${entry.style}</span>
+        <span class="yt-meta">
+          <span class="yt-pill">${entry.length}</span>
+          <span class="yt-pill">Exam: ${entry.exam}</span>
+        </span>
+      </li>`;
+    });
+    html += "</ul>";
+    return html;
+  }
+
+  function showYTRecommendations(silent = false) {
+    const active = getActiveSubjects();
     if (active.length === 0) {
-      ytResult.innerHTML = "<p style='margin:0;font-size:0.9rem;'>Select at least one class above.</p>";
+      if (!silent) {
+        ytResult.innerHTML = "<p style='margin:0;font-size:0.9rem;'>Select at least one class above.</p>";
+      }
       return;
     }
 
-    const items = [];
-    active.forEach(tag => {
-      const key = tag.getAttribute("data-key");
+    const map = new Map();
+    active.forEach(key => {
+      (ytData[key] || []).forEach(entry => {
+        if (!map.has(entry.key)) map.set(entry.key, entry);
+      });
+    });
+
+    const courses = Array.from(map.values());
+    ytResult.innerHTML = renderCourseList(courses);
+  }
+
+  /* ===== Bundles ===== */
+  const bundleMap = {
+    physicsTrack: ["physics1", "physics2", "calc"],
+    eeTrack: ["circuits", "physics2", "calc"],
+    csTrack: ["programming", "calc"],
+    mathTrack: ["calc", "diffEq"]
+  };
+
+  bundleTags.addEventListener("click", e => {
+    const tag = e.target.closest(".yt-tag");
+    if (!tag) return;
+    bundleTags.querySelectorAll(".yt-tag").forEach(b => b.classList.remove("active"));
+    tag.classList.add("active");
+  });
+
+  function applyBundleAndShow() {
+    const activeBundle = bundleTags.querySelector(".yt-tag.active");
+    if (!activeBundle) {
+      ytResult.innerHTML = "<p style='margin:0;font-size:0.9rem;'>Choose a bundle above first.</p>";
+      return;
+    }
+    const key = activeBundle.dataset.bundle;
+    const classes = bundleMap[key] || [];
+
+    // clear all subject tags
+    ytTags.querySelectorAll(".yt-tag").forEach(b => b.classList.remove("active"));
+    classes.forEach(sub => {
+      const btn = ytTags.querySelector(`.yt-tag[data-key="${sub}"]`);
+      if (btn) btn.classList.add("active");
+    });
+    saveSubjects();
+    showYTRecommendations();
+  }
+
+  /* ===== Library quick view ===== */
+  function buildLibraryView() {
+    const order = ["physics1", "physics2", "circuits", "calc", "diffEq", "programming"];
+    let html = "";
+    order.forEach(key => {
       const list = ytData[key] || [];
-      list.forEach(entry => items.push(entry));
+      if (list.length === 0) return;
+      const labelMap = {
+        physics1: "Physics I (Mechanics)",
+        physics2: "Physics II (E&M)",
+        circuits: "Circuits / Electronics",
+        calc: "Calculus I–III",
+        diffEq: "Differential Equations",
+        programming: "Programming (Java / Python)"
+      };
+      html += `<h3 style="margin:0.4rem 0 0.2rem;font-size:0.95rem;">${labelMap[key]}</h3>`;
+      html += renderCourseList(list, { suppressHeader: true });
+    });
+    libraryResult.innerHTML = html;
+  }
+
+  buildLibraryView();
+  restoreSubjects();
+
+  /* ===== Exam Prep Mode ===== */
+  function pickBestForExam(subj) {
+    const list = ytData[subj] || [];
+    if (list.length === 0) return [];
+    // crude heuristic: highest rating first
+    const sorted = [...list].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    return sorted.slice(0, 2);
+  }
+
+  function generateExamPlan() {
+    const subj = document.getElementById("examClass").value;
+    const topic = document.getElementById("examTopic").value.trim() || "this topic";
+    const mins = parseInt(document.getElementById("examTime").value, 10) || 60;
+    const out = document.getElementById("examResult");
+
+    const best = pickBestForExam(subj);
+    if (best.length === 0) {
+      out.textContent = "No data for that class yet.";
+      return;
+    }
+
+    const readingTime = Math.round(mins * 0.25);
+    const problemsTime = mins - readingTime;
+
+    let labelMap = {
+      physics1: "kinematics, forces, energy, momentum",
+      physics2: "electric fields, Gauss's law, circuits, magnetism",
+      circuits: "Ohm's law, nodal/mesh analysis, Thevenin, RC/RL",
+      calc: "limits, derivatives, integrals, series",
+      diffEq: "1st/2nd order DEs, Laplace, systems",
+      programming: "syntax, loops, functions, arrays"
+    };
+
+    out.innerHTML = `
+      <p style="margin-top:0;">Plan for the next <strong>${mins} minutes</strong> on <strong>${topic}</strong>:</p>
+      <ol style="padding-left:1.1rem;font-size:0.9rem;">
+        <li><strong>Watch:</strong> 1–2 videos (~${readingTime} min) from:
+          <ul class="yt-list">
+            ${best.map(c => `<li><a href="${c.url}" target="_blank" rel="noopener">${c.label}</a></li>`).join("")}
+          </ul>
+        </li>
+        <li><strong>Note Card:</strong> Write 3–5 key formulas/ideas related to ${topic}. If you're blank, use core topics like: ${labelMap[subj]}.</li>
+        <li><strong>Practice (~${problemsTime} min):</strong> Do 3–5 problems from your homework or book. Mark any you can't finish in < 5 minutes as "review later".</li>
+      </ol>
+      <p style="margin:0;font-size:0.8rem;color:var(--muted);">Tip: finish by rewriting the most important formula or idea for ${topic} in your own words.</p>
+    `;
+  }
+
+  /* ===== Course Wizard ===== */
+  function runCourseWizard() {
+    const subj = document.getElementById("wizSubject").value;
+    const stylePref = document.getElementById("wizStyle").value;
+    const lenPref = document.getElementById("wizLength").value;
+    const out = document.getElementById("wizResult");
+
+    const list = ytData[subj] || [];
+    if (list.length === 0) {
+      out.textContent = "No data for that subject yet.";
+      return;
+    }
+
+    let candidate = list[0];
+
+    // Simple heuristic rules
+    list.forEach(entry => {
+      if (stylePref === "visual" && entry.style.toLowerCase().includes("visual")) candidate = entry;
+      if (stylePref === "derivation" && entry.style.toLowerCase().includes("board")) candidate = entry;
+      if (stylePref === "practice" && entry.style.toLowerCase().includes("problem")) candidate = entry;
+      if (stylePref === "fast" && entry.length.toLowerCase().includes("short")) candidate = entry;
     });
 
-    let html = "<ul class='yt-list'>";
-    items.forEach(entry => {
-      html += `<li><a href="${entry.url}" target="_blank" rel="noopener">${entry.label}</a></li>`;
-    });
-    html += "</ul>";
+    if (lenPref === "short" && !candidate.length.toLowerCase().includes("short")) {
+      const alt = list.find(e => e.length.toLowerCase().includes("short"));
+      if (alt) candidate = alt;
+    }
+    if (lenPref === "long" && !candidate.length.toLowerCase().includes("long")) {
+      const alt = list.find(e => e.length.toLowerCase().includes("long"));
+      if (alt) candidate = alt;
+    }
 
-    ytResult.innerHTML = html;
+    out.innerHTML = `
+      <p style="margin-top:0;">Try this channel first:</p>
+      <p style="margin:0.2rem 0;"><a href="${candidate.url}" target="_blank" rel="noopener">${candidate.label}</a></p>
+      <p class="yt-meta">${candidate.difficulty} · ${candidate.style} · ${candidate.length}</p>
+      <p style="margin:0;font-size:0.8rem;color:var(--muted);">Use this as your main course, then mix in others from the list above for different perspectives.</p>
+    `;
+  }
+
+  /* ===== Subject usage tracking (from calculators) ===== */
+  function recordSubjectUsage(subj) {
+    localStorage.setItem("labCalcLastSubject", subj);
   }
 
   /* ===== CALCULATORS ===== */
 
   // Ohm's Law
   function calcOhm() {
+    recordSubjectUsage("circuits");
     let V = parseNum("ohmV");
     let I = parseNum("ohmI");
     let R = parseNum("ohmR");
@@ -1134,6 +1443,7 @@
 
   // Equivalent resistance
   function calcReq() {
+    recordSubjectUsage("circuits");
     const mode = document.getElementById("reqMode").value;
     const raw = document.getElementById("reqList").value;
     const out = document.getElementById("reqResult");
@@ -1158,6 +1468,7 @@
 
   // Voltage divider
   function calcVoltageDivider() {
+    recordSubjectUsage("circuits");
     const Vin = parseNum("vdVin");
     const R1 = parseNum("vdR1");
     const R2 = parseNum("vdR2");
@@ -1176,6 +1487,7 @@
 
   // LED resistor
   function calcLed() {
+    recordSubjectUsage("circuits");
     const Vs = parseNum("ledVs");
     const Vf = parseNum("ledVf");
     const IfmA = parseNum("ledIf");
@@ -1202,6 +1514,7 @@
 
   // RC
   function calcRC() {
+    recordSubjectUsage("circuits");
     const R = parseNum("rcR");
     const C = parseNum("rcC");
     const out = document.getElementById("rcResult");
@@ -1220,6 +1533,7 @@
 
   // RL
   function calcRL() {
+    recordSubjectUsage("circuits");
     const R = parseNum("rlR");
     const L = parseNum("rlL");
     const out = document.getElementById("rlResult");
@@ -1238,6 +1552,7 @@
 
   // LC resonance
   function calcLC() {
+    recordSubjectUsage("circuits");
     const L = parseNum("lcL");
     const C = parseNum("lcC");
     const out = document.getElementById("lcResult");
@@ -1256,6 +1571,7 @@
 
   // Energy
   function calcEnergy() {
+    recordSubjectUsage("circuits");
     const C = parseNum("eC");
     const V = parseNum("eV");
     const L = parseNum("eL");
@@ -1282,6 +1598,7 @@
 
   // dB gain
   function calcDB() {
+    recordSubjectUsage("circuits");
     const mode = document.getElementById("dbMode").value;
     const In = parseNum("dbIn");
     const Out = parseNum("dbOut");
@@ -1304,6 +1621,7 @@
 
   // Kinematics
   function calcKinematics() {
+    recordSubjectUsage("physics1");
     const v0 = parseNum("kmV0") ?? 0;
     const a = parseNum("kmA");
     const t = parseNum("kmT");
@@ -1338,6 +1656,7 @@
 
   // Projectile
   function calcProjectile() {
+    recordSubjectUsage("physics1");
     const v0 = parseNum("pmV0");
     const angleDeg = parseNum("pmAngle");
     let g = parseNum("pmG");
@@ -1363,6 +1682,7 @@
 
   // Newton
   function calcNewton() {
+    recordSubjectUsage("physics1");
     const m = parseNum("nwM");
     const a = parseNum("nwA");
     let g = parseNum("nwG");
@@ -1388,6 +1708,7 @@
 
   // Momentum / KE
   function calcMomentumKE() {
+    recordSubjectUsage("physics1");
     const m = parseNum("mkM");
     const v = parseNum("mkV");
     const out = document.getElementById("mkResult");
@@ -1403,6 +1724,5 @@
     out.textContent =
       `Momentum p = ${fmt(p)} kg·m/s, kinetic energy KE = ${fmt(KE)} J.`;
   }
-</script>
-</body>
+</script></body>
 </html>
