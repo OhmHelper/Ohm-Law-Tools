@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Lab Calculators – Electronics & Physics Tools</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Free online electronics & physics calculators with dark/light themes, study tools, and note-card guides." />
+  <meta name="description" content="Free online electronics & physics calculators with themes, study tools, YouTube course recommendations, and note-card guides." />
 
   <style>
     /* ========= THEME VARIABLES ========= */
@@ -112,7 +112,6 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem 1.2rem;
-      background: rgba(0,0,0,0.18);
       background-color: var(--bg);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
@@ -129,7 +128,6 @@
     }
 
     .nav-link,
-    #themeToggle,
     #searchBtn {
       padding: 0.35rem 0.75rem;
       border-radius: 8px;
@@ -144,7 +142,6 @@
     }
 
     .nav-link:hover,
-    #themeToggle:hover,
     #searchBtn:hover {
       background: var(--accent);
       color: white;
@@ -190,11 +187,6 @@
 
     /* Mobile nav */
     @media (max-width: 700px) {
-      nav {
-        position: sticky;
-        top: 0;
-      }
-
       #menuToggle {
         display: inline-flex;
       }
@@ -210,7 +202,7 @@
         position: fixed;
         top: 3rem;
         left: 0;
-        width: 70%;
+        width: 72%;
         max-width: 260px;
         height: calc(100% - 3rem);
         background: var(--bg);
@@ -397,6 +389,47 @@
       text-decoration: underline;
     }
 
+    /* YOUTUBE RECOMMENDER */
+    .yt-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.3rem 0 0.6rem;
+    }
+
+    .yt-tag {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .yt-tag.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .yt-list {
+      font-size: 0.9rem;
+      padding-left: 1.1rem;
+    }
+
+    .yt-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .yt-list a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .yt-list a:hover {
+      text-decoration: underline;
+    }
+
     /* FOOTER */
     footer {
       max-width: 1100px;
@@ -410,6 +443,7 @@
       color: var(--accent);
       text-decoration: none;
     }
+
     footer a:hover {
       text-decoration: underline;
     }
@@ -463,7 +497,7 @@
 <body>
 <header>
   <h1>Lab Calculators</h1>
-  <p>Modern electronics & physics calculators with themes, study tools, and note-card guides.</p>
+  <p>Modern electronics & physics calculators with themes, study tools, YouTube course picks, and note-card guides.</p>
 </header>
 
 <nav id="topNav">
@@ -472,6 +506,7 @@
     <button class="nav-link" onclick="scrollToId('electronics-header')">Electronics</button>
     <button class="nav-link" onclick="scrollToId('physics-header')">Physics</button>
     <button class="nav-link" onclick="scrollToId('notes')">Note Cards</button>
+    <button class="nav-link" onclick="scrollToId('ytcourses')">YouTube Courses</button>
     <a class="nav-link" href="study.html">Study Tools</a>
     <a class="nav-link" href="about.html">About</a>
 
@@ -793,12 +828,36 @@
     </ul>
 
     <div class="notes-download">
-      Downloadable PDF (once you add it to the repo):
+      (Optional) Add a PDF version to <code>assets/physics-notes.pdf</code> and this link will download it:
       <br />
-      <code>assets/physics-notes.pdf</code> → 
       <a href="assets/physics-notes.pdf" download>Download Physics Note Card (PDF)</a>
     </div>
   </section>
+
+  <!-- ========= YOUTUBE COURSE RECOMMENDER ========= -->
+  <div class="section-header" id="ytcourses">
+    <h2 class="section-title">Recommended YouTube Courses</h2>
+  </div>
+
+  <section class="card">
+    <h2>Pick Your Classes</h2>
+    <small>Click the subjects you care about. Everything runs locally in your browser.</small>
+
+    <div class="yt-tags" id="ytTags">
+      <button class="yt-tag" data-key="physics1">Physics I (Mechanics)</button>
+      <button class="yt-tag" data-key="physics2">Physics II (E&M)</button>
+      <button class="yt-tag" data-key="circuits">Circuits / Electronics I</button>
+      <button class="yt-tag" data-key="calc">Calculus I–III</button>
+      <button class="yt-tag" data-key="diffEq">Differential Equations</button>
+      <button class="yt-tag" data-key="programming">Programming (Java / Python)</button>
+    </div>
+
+    <button onclick="showYTRecommendations()">Show Recommendations</button>
+    <div class="result" id="ytResult">
+      <p style="margin:0;font-size:0.85rem;color:var(--muted);">No data is sent anywhere. This just filters a curated list of channels.</p>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -839,6 +898,8 @@
     if (theme === "system") {
       const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    } else if (theme === "dark") {
+      root.removeAttribute("data-theme"); // default dark vars
     } else {
       root.setAttribute("data-theme", theme);
     }
@@ -942,7 +1003,111 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  /* ===== CALCULATORS (your original logic) ===== */
+  /* ===== YOUTUBE RECOMMENDER ===== */
+  const ytData = {
+    physics1: [
+      {
+        label: "Michel van Biezen – Mechanics playlists",
+        url: "https://www.youtube.com/@MichelvanBiezen/playlists"
+      },
+      {
+        label: "Flipping Physics – AP/Intro mechanics",
+        url: "https://www.youtube.com/@FlippingPhysics"
+      }
+    ],
+    physics2: [
+      {
+        label: "Michel van Biezen – E&M playlists",
+        url: "https://www.youtube.com/@MichelvanBiezen/playlists"
+      },
+      {
+        label: "Physics with Professor Dave – E&M",
+        url: "https://www.youtube.com/@ProfessorDaveExplains"
+      }
+    ],
+    circuits: [
+      {
+        label: "Afrotechmods – basic circuits",
+        url: "https://www.youtube.com/@Afrotechmods"
+      },
+      {
+        label: "All About Circuits – fundamentals",
+        url: "https://www.youtube.com/@AllAboutCircuits"
+      },
+      {
+        label: "EEVblog – practical electronics",
+        url: "https://www.youtube.com/@EEVblog"
+      }
+    ],
+    calc: [
+      {
+        label: "Professor Leonard – full Calculus I–III courses",
+        url: "https://www.youtube.com/@ProfessorLeonard"
+      },
+      {
+        label: "3Blue1Brown – visual intuition",
+        url: "https://www.youtube.com/@3blue1brown"
+      },
+      {
+        label: "patrickJMT – worked examples",
+        url: "https://www.youtube.com/@patrickjmt"
+      }
+    ],
+    diffEq: [
+      {
+        label: "Professor Leonard – Differential Equations",
+        url: "https://www.youtube.com/@ProfessorLeonard"
+      },
+      {
+        label: "blackpenredpen – Diff Eq examples",
+        url: "https://www.youtube.com/@blackpenredpen"
+      }
+    ],
+    programming: [
+      {
+        label: "Bro Code – Java/Python/CS basics",
+        url: "https://www.youtube.com/@BroCodez"
+      },
+      {
+        label: "freeCodeCamp.org – full-length courses",
+        url: "https://www.youtube.com/@freecodecamp"
+      }
+    ]
+  };
+
+  const ytTags = document.getElementById("ytTags");
+  const ytResult = document.getElementById("ytResult");
+
+  ytTags.addEventListener("click", e => {
+    const tag = e.target.closest(".yt-tag");
+    if (!tag) return;
+    tag.classList.toggle("active");
+  });
+
+  function showYTRecommendations() {
+    const active = Array.from(document.querySelectorAll(".yt-tag.active"));
+    if (active.length === 0) {
+      ytResult.innerHTML = "<p style='margin:0;font-size:0.9rem;'>Select at least one class above.</p>";
+      return;
+    }
+
+    const items = [];
+    active.forEach(tag => {
+      const key = tag.getAttribute("data-key");
+      const list = ytData[key] || [];
+      list.forEach(entry => items.push(entry));
+    });
+
+    let html = "<ul class='yt-list'>";
+    items.forEach(entry => {
+      html += `<li><a href="${entry.url}" target="_blank" rel="noopener">${entry.label}</a></li>`;
+    });
+    html += "</ul>";
+
+    ytResult.innerHTML = html;
+  }
+
+  /* ===== CALCULATORS ===== */
 
   // Ohm's Law
   function calcOhm() {
