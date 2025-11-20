@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About – Lab Calculators</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="About the Lab Calculators website, its purpose, and how to contact the creator." />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: dark light;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #050608;
+      color: #f5f5f5;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2rem;
+      line-height: 1.6;
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0.3rem;
+      font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+    }
+    h2 {
+      margin-top: 1.3rem;
+      font-size: 1.1rem;
+    }
+    a {
+      color: #9aaeff;
+    }
+    p, li {
+      font-size: 0.95rem;
+    }
+    header {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 0.5rem;
+    }
+    header a {
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.25rem 1.5rem;
+      font-size: 0.8rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Back to Lab Calculators</a>
+  </header>
+
+  <main>
+    <h1>About This Site</h1>
+
+    <p>
+      <strong>Lab Calculators / Ohm-Law-Tools</strong> is a collection of free, simple online calculators for electronics and physics. 
+      The goal is to make quick calculations easy, fast, and accessible without ads, accounts, tracking, or complicated software.
+    </p>
+
+    <h2>Why this site exists</h2>
+    <p>
+      As someone who studies and works with electronics, physics, circuits, and engineering concepts, I found myself constantly 
+      needing quick tools for:
+    </p>
+
+    <ul>
+      <li>Ohm’s Law</li>
+      <li>Resistor combinations</li>
+      <li>RC/RL/LC calculations</li>
+      <li>LED resistor sizing</li>
+      <li>Physics formulas</li>
+      <li>Math for labs, schoolwork, and hobby projects</li>
+    </ul>
+
+    <p>
+      Instead of jumping between calculators scattered across the internet, this site brings all the most useful tools together 
+      in one clean, fast, lightweight page — no pop-ups, no trackers, no distractions.
+    </p>
+
+    <h2>Who runs this site?</h2>
+    <p>
+      The site is maintained under the username <strong>OhmHelper</strong> on GitHub.  
+      It’s intentionally kept simple and anonymous — the focus is on providing useful tools, not personal branding.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      If you have suggestions, want a new calculator added, or notice something incorrect, you can reach out:
+    </p>
+
+    <ul>
+      <li>Email: <a href="mailto:labcalculators@gmail.com">labcalculators@gmail.com</a></li>
+      <li>GitHub Repo: <a href="https://github.com/OhmHelper/Ohm-Law-Tools" target="_blank">Ohm-Law-Tools on GitHub</a></li>
+    </ul>
+
+    <p>
+      Feel free to send feature ideas or corrections — the site will continue to grow over time.
+    </p>
+  </main>
+
+  <footer>
+    <p>
+      © <span id="year"></span> Lab Calculators / Ohm-Law-Tools  
+      · <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
